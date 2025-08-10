@@ -29,17 +29,23 @@ def show_all(contacts):
         result.append(f"{name}: {phone}")
     return "\n".join(result) if result else "No contacts found."
 
+def parse_command(user_input):
+    parts = user_input.strip().split()
+    if not parts:
+        return None, []
+    command = parts[0].lower()
+    args = parts[1:]
+    return command, args
+
 def main():
     contacts = {}
     while True:
-        command = input("Enter a command: ").strip().lower()
+        user_input = input("Enter a command: ")
+        command, args = parse_command(user_input)
+
         if command == "add":
-            raw_data = input("Enter the argument for the command\nEnter a command: ")
-            args = raw_data.split()
             print(add_contact(args, contacts))
         elif command == "phone":
-            raw_data = input("Enter the argument for the command\nEnter a command: ")
-            args = raw_data.split()
             print(get_phone(args, contacts))
         elif command == "all":
             print(show_all(contacts))
